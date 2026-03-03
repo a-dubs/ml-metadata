@@ -23,13 +23,9 @@ import setuptools
 from setuptools import find_packages, setup
 from setuptools.command.install import install
 from setuptools.dist import Distribution
+from setuptools.command import build
 
-# It is recommended to import setuptools prior to importing distutils to avoid
-# using legacy behavior from distutils.
-# https://setuptools.readthedocs.io/en/latest/history.html#v48-0-0
-from distutils.command import build
-
-_IS_PY311 = sys.version_info >= (3, 11)
+_IS_PY311_OR_GREATER = sys.version_info >= (3, 11)
 
 
 class _BuildCommand(build.build):
@@ -151,6 +147,8 @@ setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
@@ -163,10 +161,10 @@ setup(
     # Make sure to sync the versions of common dependencies (absl-py, numpy,
     # six, and protobuf) with TF.
     install_requires=[
-        'absl-py>=0.9,<2.0.0',
-        'attrs>=20.3,<24',
+        'absl-py>=0.9,<3',
+        'attrs>=20.3,<26',
         'grpcio>=1.8.6,<2',
-        f'protobuf>={"4.25.2" if _IS_PY311 else "4.21.6"},<5',
+        f'protobuf>={"4.25.2" if _IS_PY311_OR_GREATER else "4.21.6"},<6',
         'six>=1.10,<2',
     ],
     extras_require={
